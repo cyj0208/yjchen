@@ -561,7 +561,7 @@ const parallax=el=>{const r=el.getBoundingClientRect(),shift=(innerHeight/2-(r.t
     try{
       // 线上使用同源接口；直接双击本地 HTML 时自动投递到正式 Vercel 后端。
       const apiUrl=(location.protocol==='file:'||location.hostname.endsWith('github.io'))
-        ? 'https://yjchen-fqyv.vercel.app/api/send-letter'
+        ? 'https://cyj0208-mail-api.netlify.app/.netlify/functions/send-letter'
         : '/api/send-letter';
       const response=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({signature,content,website:websiteDom.value})});
       const result=await response.json().catch(()=>({ok:false,message:'邮件接口返回异常'}));
