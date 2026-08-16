@@ -559,7 +559,11 @@ const parallax=el=>{const r=el.getBoundingClientRect(),shift=(innerHeight/2-(r.t
     isSending=true;sendBtn.disabled=true;sendBtn.textContent='送信中';
     birdDom.classList.remove('fly-anim');void birdDom.offsetWidth;birdDom.classList.add('fly-anim');
     try{
-      const response=await fetch('/api/send-letter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({signature,content,website:websiteDom.value})});
+      // 线上使用同源接口；直接双击本地 HTML 时自动投递到正式 Vercel 后端。
+      const apiUrl=(location.protocol==='file:'||location.hostname.endsWith('github.io'))
+        ? 'https://yjchen-fqyv.vercel.app/api/send-letter'
+        : '/api/send-letter';
+      const response=await fetch(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({signature,content,website:websiteDom.value})});
       const result=await response.json().catch(()=>({ok:false,message:'邮件接口返回异常'}));
       if(!response.ok||!result.ok)throw new Error(result.message||'书信投递失败');
       addMessage('【'+signature+'】\n'+content,'pigeon-send-msg');

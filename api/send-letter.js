@@ -27,13 +27,37 @@ function rateLimited(req) {
 }
 
 module.exports = async function handler(req, res) {
+  // 兼容正式网站及直接双击本地 index.html 预览；不向其他来源开放邮件接口。
+  const requestOrigin = req.headers.origin;
+  const configuredOrigin = process.env.ALLOWED_ORIGIN;
+  const permittedOrigins = new Set([
+    configuredOrigin,
+    'https://yjchen-fqyv.vercel.app',
+    'https://cyj0208.github.io',
+    'null'
+  ].filter(Boolean));
+
+  if (requestOrigin && permittedOrigins.has(requestOrigin)) {
+    res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
+
+  if (req.method === 'OPTIONS') {
+    if (requestOrigin && !permittedOrigins.has(requestOrigin)) {
+      return sendJson(res, 403, { ok: false, message: '请求来源未获许可' });
+    }
+    res.statusCode = 204;
+    return res.end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return sendJson(res, 405, { ok: false, message: '仅支持 POST 请求' });
   }
 
-  const allowedOrigin = process.env.ALLOWED_ORIGIN;
-  if (allowedOrigin && req.headers.origin && req.headers.origin !== allowedOrigin) {
+  if (requestOrigin && !permittedOrigins.has(requestOrigin)) {
     return sendJson(res, 403, { ok: false, message: '请求来源未获许可' });
   }
 
