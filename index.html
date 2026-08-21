@@ -4370,10 +4370,44 @@
   }
 </style>
 <style>
+  /* 任意设备只要导航换成两行，主体就从导航真实下边界开始。 */
+  body.nav-two-row main#top {
+    margin-top: var(--two-row-nav-height, 0px) !important;
+    padding-top: 30px !important;
+  }
+  body.nav-two-row main#top .hero {
+    min-height: clamp(360px, calc(100vh - var(--two-row-nav-height, 0px) - 30px), 560px) !important;
+    align-items: start !important;
+  }
+  @media (max-width: 760px) {
+    body.nav-two-row main#top { padding-top: 18px !important; }
+    body.nav-two-row main#top .hero {
+      min-height: auto !important;
+      padding-top: 38px !important;
+    }
+  }
+  body.nav-two-row main#top .hero { padding-top: 48px !important; }
   /* 最终背景设置：原图固定铺满视口，不随页面滚动。 */
   body { background-image: linear-gradient(rgba(247,240,224,.68), rgba(247,240,224,.74)), url("背景图.jpg") !important; background-attachment: fixed !important; background-size: cover !important; background-position: center top !important; }
   #bg-parallax { display: none !important; }
 </style>
+  <style>
+    /* 本轮增量：暑期线上电脑销售与坦克大战作品卡 */
+    .summer-sales-card{background:linear-gradient(135deg,var(--card),rgba(178,139,73,.08));border-color:color-mix(in srgb,var(--gold) 42%,var(--line))}
+    .summer-sales-card .time{color:var(--gold)}
+    .portfolio-card.tank-card{grid-column:1 / -1;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);align-items:stretch;width:min(920px,100%);justify-self:center;min-height:360px;margin-top:2px}
+    .tank-card .tank-art{height:100%;min-height:300px;background:#18343a;overflow:hidden}
+    .tank-card .tank-art svg{display:block;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .35s ease}
+    .tank-card .tank-art::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 35%,rgba(255,239,180,.2) 50%,transparent 65%);transform:translateX(-120%);transition:transform .7s ease;z-index:2;pointer-events:none}
+    .tank-card .tank-art::after{content:"";position:absolute;inset:0;background:rgba(11,25,28,.4);opacity:0;transition:opacity .28s ease;z-index:3;pointer-events:none}
+     .tank-card .tank-art:hover svg{transform:scale(1.045);filter:saturate(1.18) brightness(1.08)}
+     .tank-card .tank-art:hover::before{transform:translateX(120%)}
+     .tank-card .tank-art:hover::after{opacity:1}
+     .tank-click-label{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-42%) scale(.92);padding:10px 19px;border:1px solid rgba(255,239,180,.82);border-radius:999px;background:rgba(20,34,35,.7);color:#fff0bd;font:700 15px var(--serif);letter-spacing:.16em;white-space:nowrap;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+     .tank-card .tank-art:hover .tank-click-label,.tank-card .tank-art:focus-visible .tank-click-label{opacity:1;transform:translate(-50%,-50%) scale(1)}
+     .tank-card .portfolio-copy{display:flex;flex-direction:column;justify-content:center}
+     @media(max-width:800px){.portfolio-card.tank-card{grid-column:auto;grid-template-columns:1fr;min-height:0}.tank-card .tank-art{min-height:235px}.tank-card .portfolio-copy{display:block}}
+  </style>
 </head>
 
 <body>
@@ -4491,6 +4525,17 @@
                 <li>根据测试结果动态调整教学内容，优化讲解方式与训练节奏。</li>
                 <li>帮助学生改善审题习惯和学习主动性，实现阶段性成绩的提高。</li>
                 <li>沉淀需求分析、沟通表达、计划执行和复杂知识简化讲解能力。</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-card summer-sales-card">
+            <div class="time">2026.7 起</div>
+            <div>
+              <h3>暑期线上电脑销售</h3>
+              <div class="sub">线上销售 · 实践经历</div>
+              <ul class="points">
+                <li>暑期（2026 年 7 月开始）在线上开展电脑销售，在实际沟通与跟进中了解产品和用户需求。</li>
+                <li>锻炼沟通表达、主动服务和处理实际问题的能力，积累社会实践经验。</li>
               </ul>
             </div>
           </article>
@@ -4691,13 +4736,38 @@
                   href="https://cyjfjdz.netlify.app/" target="_blank" rel="noopener">进入作品</a></div>
             </div>
           </article>
-          <article class="portfolio-card">
+          <article class="portfolio-card tank-card">
+            <a class="game-art tank-art" href="https://cyjtkdz.netlify.app/" target="_blank" rel="noopener"
+              aria-label="打开坦克大战作品">
+              <svg viewBox="0 0 920 420" role="img" aria-label="坦克大战游戏预览">
+                <defs>
+                  <linearGradient id="tankSky" x1="0" y1="0" x2="1" y2="1">
+                    <stop stop-color="#162b3b"/><stop offset=".52" stop-color="#365b58"/><stop offset="1" stop-color="#b2774f"/>
+                  </linearGradient>
+                  <linearGradient id="tankGlow" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#d8c083" stop-opacity="0"/><stop offset=".5" stop-color="#f2d68e" stop-opacity=".68"/><stop offset="1" stop-color="#d8c083" stop-opacity="0"/></linearGradient>
+                </defs>
+                <rect width="920" height="420" fill="url(#tankSky)"/>
+                <path d="M0 270c130-76 210 22 331-54 141-88 195 45 326-34 91-54 168 25 263-28v266H0z" fill="#142a2d" opacity=".7"/>
+                <path d="M0 332c147-49 251 16 389-32 146-51 245 34 531-25v145H0z" fill="#101a20" opacity=".84"/>
+                <path d="M0 365c166-22 264 18 412-8 155-28 271 20 508-16" fill="none" stroke="url(#tankGlow)" stroke-width="3"/>
+                <g fill="none" stroke="#d9bd7a" stroke-opacity=".44"><path d="M120 210h110M675 146h148M260 92h94"/><circle cx="175" cy="210" r="25"/><circle cx="750" cy="145" r="31"/></g>
+                <g transform="translate(460 225)">
+                  <path d="M-154 49h308l-27 57h-254z" fill="#1d2830" stroke="#d5b36e" stroke-width="3"/>
+                  <rect x="-127" y="-4" width="254" height="72" rx="18" fill="#385b59" stroke="#e2c47c" stroke-width="3"/>
+                  <path d="M-75-7c8-65 142-65 151 0z" fill="#547f72" stroke="#efd38d" stroke-width="3"/>
+                  <rect x="-28" y="-65" width="56" height="31" rx="8" fill="#2c4749" stroke="#efd38d" stroke-width="3"/>
+                  <path d="M0-65V-137" stroke="#efd38d" stroke-width="11" stroke-linecap="round"/>
+                  <path d="M-131 19h-47M131 19h47" stroke="#b84e3d" stroke-width="16" stroke-linecap="round"/>
+                  <circle cx="0" cy="-49" r="7" fill="#d8ff8a"/>
+                </g>
+               <text x="42" y="66" fill="#f7e5b3" font-size="22" letter-spacing="6">VIBE CODING · TACTICAL GAME</text>
+              </svg>
+              <span class="tank-click-label">点击开战 ↗</span>
+            </a>
             <div class="portfolio-copy">
-              <div class="project-index">持续学习 · 其三</div>
-              <h3>AI 工具与创作实践</h3>
-              <p>持续学习 ChatGPT、OpenAI Codex 与 AI 生图工具，并将其应用于学习规划、内容创作、PPT 和网页制作，持续整理可复用的提示词与工作流。</p>
-              <div class="chips"><span class="chip">ChatGPT</span><span class="chip">OpenAI Codex</span><span
-                  class="chip">AI 生图</span></div>
+              <div class="project-index">Vibe Coding · 其三</div>
+              <h3>坦克大战</h3>
+              <p>使用 Vibe Coding 制作坦克大战小游戏，完成战斗玩法、关卡设计与交互反馈。<br><b>成果：</b>形成可在线体验的浏览器游戏作品。</p>
             </div>
           </article>
         </div>
@@ -4836,15 +4906,8 @@
       const portfolio = document.getElementById('portfolio');
       const certificates = document.getElementById('certificates');
       if (portfolio && certificates) certificates.before(portfolio);
-      const thirdWork = document.querySelector('#portfolio .portfolio-card:nth-child(3)');
-      if (thirdWork) thirdWork.remove();
-      const campus = document.getElementById('exp-campus');
-      if (campus && !campus.querySelector('.learning-card')) {
-        const card = document.createElement('article');
-        card.className = 'timeline-card learning-card';
-        card.innerHTML = '<div class="time">持续进行</div><div><h3>AI 工具学习与创作实践</h3><div class="sub">个人学习 · 工具应用</div><ul class="points"><li>持续学习 ChatGPT、OpenAI Codex 与 AI 生图工具，建立从问题拆解到成果校验的实践流程。</li><li>将 AI 工具应用于学习规划、内容创作、PPT 和网页制作，并整理可复用的提示词与工作流。</li><li>通过实际作品验证工具能力，持续优化信息表达、视觉呈现与交互体验。</li></ul><div class="learning-tools"><span class="chip">ChatGPT</span><span class="chip">OpenAI Codex</span><span class="chip">AI 生图</span></div></div>';
-        campus.appendChild(card);
-      }
+      // 已移除旧版多余动态卡片插入，避免作品/经历区出现重复内容。
+      // 作品集 DOM 保持三张：个人简历网站、飞机大战、坦克大战（第三张）。
 
       const opening = document.getElementById('opening');
       let entryTimer = null, countTimer = null, entered = false;
@@ -5251,6 +5314,22 @@
     })();
   </script>
 
+<script>
+  // 不猜测导航高度；仅在两行移动导航生效时同步 main 的起始位置。
+  (() => {
+    const header = document.querySelector('.topbar');
+    const links = document.querySelector('.navlinks');
+    const updateMainOffset = () => {
+      const headerHeight = header ? header.getBoundingClientRect().height : 0;
+      const twoRows = headerHeight > 76;
+      document.body.classList.toggle('nav-two-row', twoRows);
+      document.documentElement.style.setProperty('--two-row-nav-height', twoRows ? `${headerHeight}px` : '0px');
+    };
+    if (header) new ResizeObserver(updateMainOffset).observe(header);
+    addEventListener('resize', updateMainOffset, { passive: true });
+    updateMainOffset();
+  })();
+</script>
 </body>
 
 </html>
